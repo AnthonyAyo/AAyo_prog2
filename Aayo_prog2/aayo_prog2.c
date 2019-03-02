@@ -8,8 +8,8 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include "student_argtok.h"
-#include "student_exec.h"
+#include "aayo_argtok.h"
+#include "aayo_exec.h"
 
 int main()
 {

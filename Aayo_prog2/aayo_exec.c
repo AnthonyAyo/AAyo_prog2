@@ -1,6 +1,6 @@
 //
 //	EE 4374 Assignment # 2 Command Executer
-//	Author: ???
+//	Author: Anthony Ayo
 //
 
 int execBackground(char **args)
@@ -24,7 +24,15 @@ int execBackground(char **args)
     }
 }
 
-int executeCmd(char **args)
-{
+int executeCmd(char **args){
+  pid_t firstPid, secondPid;
+  firstPid = fork;
+  if(firstPid =
 
+
+
+
+
+
+  
 }
