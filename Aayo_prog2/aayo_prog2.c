@@ -1,6 +1,6 @@
 //
 //	EE 4374 Assignment # 2 Shell (Test Function)
-//	Author: ???
+//	Author: Anthony Ayo
 //
 
 #include <fcntl.h>
@@ -35,9 +35,10 @@ int main()
 		{
 			exit(0);
 		}
-
+		//printf("test1");
 		// make the argument vector
 		args = argtok(buff);
+		//printf("test2");
 
 		// execute the command
 		executeCmd(args);
