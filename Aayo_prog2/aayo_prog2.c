@@ -26,7 +26,7 @@ int main()
 		// Read the line
 		inputSize = read(0, buff, 128);
 		// Strip off carriage return
-		buff[inputSize-1] = '\0';
+		buff[inputSize - 1] = '\0';
 
 		if(buff[0] == '\0')
 			continue;
@@ -35,11 +35,31 @@ int main()
 		{
 			exit(0);
 		}
-		//printf("test1");
-		// make the argument vector
-		args = argtok(buff);
-		//printf("test2");
+	       	// make the argument vector
+		args = argtok(buff); //MAIN CODE//
+		//TEST CODE//
+		/*
+		printf("%s\n", buff);
+	       	int c = string_length(buff);
+		printf("The length of the token is %d\n", c);
+		int startPos = find_word_start(buff,0);
 
+		printf("Test 2\n");
+
+		int endPos = find_word_end(buff,startPos);
+
+		printf("Test 3\n");
+
+		int wordCount = count_words(buff);
+
+		printf("Test 4\n");
+		printf("The start of the next word is located in position : %d\n", startPos);
+
+		printf("The end of the next word is located in position : %d\n", endPos);
+
+		printf("the number of words in the statement is : %d\n" , wordCount);
+		print_tokens(args);
+		*/
 		// execute the command
 		executeCmd(args);
 

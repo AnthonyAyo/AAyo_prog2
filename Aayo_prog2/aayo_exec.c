@@ -10,6 +10,7 @@
 #include <stdio.h>
 
 
+
 int execBackground(char **args)
 {
     int i;
@@ -19,34 +20,38 @@ int execBackground(char **args)
          i++;
     }                       // traverse to the end of the tokens
     if(args[i-1][0] == '&') // check the last token
-    {
+      {
         free(args[i-1]);
         args[i-1] = NULL;  // remove the ampersand
         return 1;
-    } else {
+      } else {
         return 0;
     }
 }
 
 int executeCmd(char **args){
   pid_t first_Pid, second_Pid;
-  int ampersand = execBackground(args);
-  first_Pid = fork();
-  if((first_Pid = fork()) == 0){
-    printf("ERROR: Forking child process has failed \n");
-    exit(1);
-  } else if (first_Pid == 0 ){
-      if(execvp(*args,args) < 0){
-	printf("ERROR: Exec failed \n");
-	exit(1);
-      }
-      
-  }
-
-
-
-
-
-
   
+  first_Pid = fork();
+  int ampersand = execBackground(args);
+  if( ampersand == 0){
+    if(first_Pid < 0){
+      fprintf(stderr,"Error forking a process");
+    return -1;
+    }
+  } else if (first_Pid == 0 ){
+    printf("This is the child process %d\n", (int)getpid());
+    if(-1 ==  execvp(args[0],args)){
+      fprintf(stderr, "Error with execvp");
+      return -1;
+    }
+  } else if (ampersand == 0){
+    if( -1 == execvp (args[0], args)){
+      fprintf(stderr, "Error with execvp");
+      return -1;
+    }
+    else {
+      waitpid(first_Pid, Null, 0);  
+  }
+  return 0;
 }

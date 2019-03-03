@@ -21,10 +21,10 @@ int string_length(char *p){
 //checks to see if the character being looked at is valid
 
 char is_valid_character(char c){
-  if((c >= 33|| c <= 126 )){
-    return 1;
-  }else
+  if((c < 33 || c > 126 )){
     return 0;
+  }else
+    return 1;
 }
 
 
@@ -32,15 +32,12 @@ char is_valid_character(char c){
 // find the start of the next word
 
 int find_word_start(char *p, int pos){
-  
-  char *pp = p + pos;
-  while(*pp) {
-
-    if(is_valid_character(*pp) == '1' && is_valid_character(*(pp-1)) == '0') {
-      return pp - p;
+  char *counter = p + pos;
+  while(*counter) {
+    if(is_valid_character(*counter) == '1' && is_valid_character(*(counter-1)) == '0') {
+      return counter - p;
     } else {
-      ++pp;
-      
+      ++counter;
     }
   }
 }
@@ -83,19 +80,19 @@ int count_words(char *p){
 
 void print_tokens(char **p){
   char **pp = p;
-  int place = 0;
+  int pos = 0;
   int size = 0;
   int count = 0;
   
-  while(pp[place] != NULL) {
-    char *word = pp[place];
+  while(pp[pos] != NULL) {
+    char *word = pp[pos];
     while(*word) {
-      printf("%c", pp[place][count]);
+      printf("%c", pp[pos][count]);
       count++;
       ++word;
     }
     printf("\n");
-    place++;
+    pos++;
   }
 }
 
@@ -113,27 +110,27 @@ void free_tokens(char **p){
 
 
 
-char** argtok(char *p){
-  int number_of_words = count_words(p);
-  int position = 0;
-  int i;
-  
-  char ** tokens = malloc(sizeof(char*) * (number_of_words) + 1);// creates the array of pointer based on # of tokens
-  char *pp = p;
-  for( i = 0; i < number_of_words; i++){
-   int start = find_word_start(p, pp - p);
-   int end = find_word_end(p, pp - p) + 1;
-   tokens[i] = malloc((sizeof(char) * (end - start +1)));
-   
-   char *endpoint = p + end;
-   pp = p + start;
-   while(*pp != *endpoint){
-    tokens[i][position] = *pp;
-    position++;
-    ++pp;
+char** argtok(char *str){
+  int size = count_words(str);
+  char **tokens = malloc(sizeof(char*) * (size) + 1);
+  char *counter = str;
+
+  for(int i = 0; i < size; i++) {
+    int start = find_word_start(str, counter - str);
+    int end = find_word_end(str, counter - str) + 1;
+    tokens[i] = malloc((sizeof(char) * (end - start + 1)));
+    int place = 0;
+    char *stopPoint = str + end;
+    counter = str + start;
+    while(*counter != *stopPoint) {
+      tokens[i][place] = *counter;
+      place++;
+      ++counter;
     }
-    tokens[i][position + 1] = '\0';
-    pp = pp + 1;
+    tokens[i][place+1] ='\0';
+    counter = counter + 1;
   }
   return tokens;
 }
+
+
